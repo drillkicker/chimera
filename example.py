@@ -14,12 +14,15 @@ reload(chimera)
 x1, sr = librosa.load('input1.wav')
 x2, sr = librosa.load('input2.wav')
 
-for bands in nbands:
-    e1, e2 = chimera.generate(x1, x2, 128, sr) #GPU acceleration allows us to use a high band count without taking an immense amount of time
+# Convert audio signals to CuPy arrays
+x1 = cp.asarray(x1)
+x2 = cp.asarray(x2
 
-    # Convert CuPy arrays to NumPy arrays before saving
-    e1_np = cp.asnumpy(e1)
-    e2_np = cp.asnumpy(e2)
+e1, e2 = chimera.generate(x1, x2, 128, sr) #GPU acceleration allows us to use a high band count without taking an immense amount of time
 
-    sf.write('ooutput1.wav', e1_np, sr)
-    sf.write('output2.wav', e2_np, sr)
+# Convert CuPy arrays to NumPy arrays before saving
+e1_np = cp.asnumpy(e1)
+e2_np = cp.asnumpy(e2)
+
+sf.write('ooutput1.wav', e1_np, sr)
+sf.write('output2.wav', e2_np, sr)

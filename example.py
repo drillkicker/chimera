@@ -16,9 +16,10 @@ x2, sr = librosa.load('input2.wav')
 
 # Convert audio signals to CuPy arrays
 x1 = cp.asarray(x1)
-x2 = cp.asarray(x2
+x2 = cp.asarray(x2)
+bands = 128 #GPU acceleration allows us to use a high band count without taking an immense amount of time. Replace with 32 or 64 for less of a wait.
 
-e1, e2 = chimera.generate(x1, x2, 128, sr) #GPU acceleration allows us to use a high band count without taking an immense amount of time
+e1, e2 = chimera.generate(x1, x2, bands, sr) 
 
 # Convert CuPy arrays to NumPy arrays before saving
 e1_np = cp.asnumpy(e1)
